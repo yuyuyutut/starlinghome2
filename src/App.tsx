@@ -37,11 +37,10 @@ export default function App() {
   /* iOS 真机键盘打磨：聚焦输入框自动滚进可视区 */
   useIosKeyboardPolish();
 
-  /* 高度链统一 100vh（见 index.css）：PWA 无地址栏，不需要 100dvh 的动态性，
-     也不再用 visualViewport 同步高度——iOS 自行处理 safe-area，底部导航始终稳定 */
+  /* iOS 真机 PWA 适配：动态视口高度 + 键盘弹出自动收缩（见 iosKeyboard.ts） */
 
   return (
-    <div className="relative mx-auto flex h-screen w-full max-w-2xl flex-col">
+    <div className="relative mx-auto flex w-full max-w-2xl flex-col" style={{ height: "var(--app-height, 100dvh)" }}>
       {lockOn && !unlocked && <LockScreen onUnlock={() => setUnlocked(true)} />}
       {/* 全屏背景：灰调植物庭院插画 */}
       <div className="fixed inset-0 -z-10">
