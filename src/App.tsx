@@ -43,10 +43,9 @@ export default function App() {
   return (
     <div className="relative mx-auto flex h-screen w-full max-w-2xl flex-col">
       {lockOn && !unlocked && <LockScreen onUnlock={() => setUnlocked(true)} />}
-      {/* 全屏背景：灰调植物庭院插画 + 白色雾面 */}
+      {/* 全屏背景：灰调植物庭院插画 */}
       <div className="fixed inset-0 -z-10">
         <img src={BG_GARDEN} alt="" className="h-full w-full object-cover" draggable={false} />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/25 via-white/10 to-white/35" />
       </div>
 
       {/* 主区域 */}

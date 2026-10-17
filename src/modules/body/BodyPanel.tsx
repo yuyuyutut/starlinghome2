@@ -53,7 +53,7 @@ export function BodyPanel({ c }: { c: Companion }) {
     : 0;
 
   return (
-    <div className="h-full overflow-y-auto px-4 pb-4 pt-5">
+    <div className="chat-scroll h-full overflow-y-auto px-4 pb-4 pt-5">
       <div className="mb-4 flex items-end justify-between">
         <div>
           <div className="font-script text-[28px] leading-none text-[#1f1f1f]">Le Corps</div>
