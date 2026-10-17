@@ -2,7 +2,7 @@
 
 灰调玻璃拟态的 AI 伴侣 PWA —— 聊天、记忆、身体涨落与心潮投影，所有数据只存在浏览器本地。
 
-**在线地址：https://yuyuyutut.github.io/staringhome2/**
+**在线地址：https://yuyuyutut.github.io/starlinghome2/**
 
 > 纯前端项目，GitHub Pages 直接托管构建产物，无需任何服务器。
 
