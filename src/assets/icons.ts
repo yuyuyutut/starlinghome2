@@ -1,0 +1,5 @@
+export { ICON_192 } from './icon192'
+export { ICON_512 } from './icon512'
+export { ICON_MASKABLE_192 } from './icon-maskable-192'
+export { ICON_MASKABLE_512 } from './icon-maskable-512'
+export { APPLE_TOUCH_ICON } from './apple-touch-icon'

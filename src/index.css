@@ -1,0 +1,331 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 60 2% 84%; /* 灰调底 */
+    --foreground: 0 0% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+    --primary: 0 0% 15%; /* 墨色主按钮 */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 60 2% 90%;
+    --secondary-foreground: 0 0% 15%;
+    --muted: 60 2% 90%;
+    --muted-foreground: 0 0% 44%;
+    --accent: 60 2% 93%;
+    --accent-foreground: 0 0% 15%;
+    --destructive: 0 30% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 60 2% 78%;
+    --input: 0 0% 70%;
+    --ring: 0 0% 25%;
+    --radius: 1.4rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  /* 与主题色一致的兜底底色：任何系统级露底（Safari 工具栏过渡、过滚动回弹）都融入画面 */
+  html {
+    background: #e6e6e2;
+  }
+  /* 高度链统一 100vh + overflow hidden（PWA 无地址栏，不需要 100dvh 的动态性）：
+     html / body / #root 三层同高，iOS 自行处理 safe-area，应用滚动全部由面板内部容器承担 */
+  html,
+  body,
+  #root {
+    height: 100vh;
+    overflow: hidden;
+    max-width: 100vw;
+  }
+  body {
+    @apply antialiased;
+    color: #262626;
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+    font-weight: 300;
+    overscroll-behavior: none;
+    background: #e6e6e2;
+  }
+}
+
+/* —— 灰调玻璃设计系统 —— */
+
+/* 法式手写体标题（拉丁字母） */
+.font-script {
+  font-family: "Pinyon Script", "Snell Roundhand", "Cormorant Garamond", cursive;
+  font-weight: 400;
+}
+/* 斜体注释小字 */
+.font-caption {
+  font-family: "Cormorant Garamond", Georgia, "Songti SC", serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* 半透明磨砂面板：斜向光泽 + 强模糊 + 内高光，做出真玻璃质感 */
+.glass {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.3) 55%, rgba(255, 255, 255, 0.42) 100%);
+  backdrop-filter: blur(30px) saturate(1.15) brightness(1.02);
+  -webkit-backdrop-filter: blur(30px) saturate(1.15) brightness(1.02);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 10px 40px rgba(30, 30, 30, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.3),
+    inset 1px 0 0 rgba(255, 255, 255, 0.35);
+}
+.glass-deep {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.45) 60%, rgba(255, 255, 255, 0.58) 100%);
+  backdrop-filter: blur(34px) saturate(1.1);
+  -webkit-backdrop-filter: blur(34px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 12px 44px rgba(30, 30, 30, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+}
+/* 暗色玻璃（用户气泡 / 深色按钮）：半透明让背景微透 */
+.glass-dark {
+  background: linear-gradient(140deg, rgba(30, 30, 30, 0.66) 0%, rgba(30, 30, 30, 0.48) 100%);
+  backdrop-filter: blur(26px) saturate(1.05);
+  -webkit-backdrop-filter: blur(26px) saturate(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 10px 32px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* 发丝级分割线 */
+.hairline {
+  border-color: rgba(0, 0, 0, 0.16) !important;
+}
+.hairline-b {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+}
+
+/* 表情去色，融入灰调画面 */
+.emoji-mono {
+  filter: grayscale(1) contrast(0.88) opacity(0.92);
+}
+
+/* 下划线式输入（参考设置页样式） */
+.underline-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.22);
+  border-radius: 0;
+  padding-left: 2px;
+}
+.underline-input:focus {
+  border-bottom-color: rgba(0, 0, 0, 0.55);
+  box-shadow: none;
+}
+
+/* 聊天区细腻滚动条 */
+.chat-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: hsl(40 25% 78%);
+  border-radius: 99px;
+}
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 流式输出光标 */
+.stream-cursor::after {
+  content: "▍";
+  color: rgba(0, 0, 0, 0.5);
+  animation: caret-blink 1s steps(1) infinite;
+  margin-left: 1px;
+}
+
+/* 聊天气泡进入 */
+.bubble-in {
+  animation: fade-in-up 0.3s ease-out both;
+}
+
+/* 输入框聚焦 */
+.glow-focus:focus-within {
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.28), 0 10px 44px rgba(30, 30, 30, 0.1);
+}
+
+/* 头像呼吸光环（白色微光） */
+.avatar-halo {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 0 18px rgba(255, 255, 255, 0.75);
+}
+
+/* —— 开屏门锁 —— */
+/* 风铃：绕顶部挂点轻摆 */
+.chime-sway {
+  transform-origin: 50% 0;
+  animation: chime-sway 4.2s ease-in-out infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@keyframes chime-sway {
+  0%,
+  100% {
+    transform: rotate(-2.4deg);
+  }
+  50% {
+    transform: rotate(2.4deg);
+  }
+}
+/* 拉绳后风铃大幅晃开 */
+.chime-sway-hard {
+  animation: chime-sway-hard 0.9s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+@keyframes chime-sway-hard {
+  0% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(9deg);
+  }
+  60% {
+    transform: rotate(-6deg);
+  }
+  100% {
+    transform: rotate(2deg);
+  }
+}
+
+/* 键盘磨砂键帽：半透明雾面、微微凸起，按下回沉 */
+.key-cap {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.11) 100%);
+  backdrop-filter: blur(28px) saturate(1.1);
+  -webkit-backdrop-filter: blur(28px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.18) inset,
+    0 6px 14px rgba(43, 43, 43, 0.08),
+    0 2px 3px rgba(43, 43, 43, 0.05);
+}
+.key-cap:active {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 2px 5px rgba(43, 43, 43, 0.08);
+}
+/* 确定键：深雾面玻璃，与数字键区分 */
+.key-cap-ok {
+  background: linear-gradient(160deg, rgba(43, 43, 43, 0.48) 0%, rgba(43, 43, 43, 0.3) 100%);
+  backdrop-filter: blur(28px) saturate(1.1);
+  -webkit-backdrop-filter: blur(28px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 6px 14px rgba(43, 43, 43, 0.16),
+    0 2px 3px rgba(43, 43, 43, 0.08);
+}
+.key-cap-ok:active {
+  box-shadow: 0 2px 5px rgba(43, 43, 43, 0.12);
+}
+
+/* 聊天气泡：低透明 + 强磨砂（不与其他面板共用） */
+.bubble-ai {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.36) 0%, rgba(255, 255, 255, 0.17) 60%, rgba(255, 255, 255, 0.26) 100%);
+  backdrop-filter: blur(32px) saturate(1.12) brightness(1.02);
+  -webkit-backdrop-filter: blur(32px) saturate(1.12) brightness(1.02);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 8px 26px rgba(30, 30, 30, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.22);
+}
+.bubble-user {
+  background: linear-gradient(150deg, rgba(30, 30, 30, 0.5) 0%, rgba(30, 30, 30, 0.34) 100%);
+  backdrop-filter: blur(30px) saturate(1.08);
+  -webkit-backdrop-filter: blur(30px) saturate(1.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* 口令错误：圆点左右摇晃 */
+.shake-x {
+  animation: shake-x 0.45s ease-in-out both;
+}
+@keyframes shake-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-9px);
+  }
+  40% {
+    transform: translateX(8px);
+  }
+  60% {
+    transform: translateX(-6px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+/* 口令正确：圆点轻轻亮起弹一下 */
+.dot-ok {
+  animation: dot-ok 0.35s ease-out both;
+}
+@keyframes dot-ok {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1.15);
+  }
+}
