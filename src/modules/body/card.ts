@@ -1,5 +1,9 @@
 /**
- * body/card.ts — <ephemeral_state> 状态卡渲染 + 结构化身体状态
+ * body/card.ts — <ephemeral_state> 状态卡渲染 + 结构化身体状态（TypeScript 移植）
+ *
+ * 移植自 github.com/chuli1122/Eventide（src/eventide/prompt.py）。
+ * Required Notice: Copyright 2026 Chuli (@chuli1122)
+ * SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
  *
  * renderStateCard 返回的是隐藏模型上下文（非 UI 文案）；
  * bodyStatePayload 给面板 UI 用（数值 + 档位 + 去档位前缀的说明）。
