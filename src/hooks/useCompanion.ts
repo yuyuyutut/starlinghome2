@@ -37,7 +37,7 @@ import {
   type CacheSegment,
 } from "@/modules/cache/split";
 import { logCacheRequest, logCacheUsage } from "@/modules/cache/log";
-// 生理系统：tick 推进 + 事件触发 + <ephemeral_state> 状态卡注入
+// 生理系统（Eventide 移植）：tick 推进 + 事件触发 + <ephemeral_state> 状态卡注入
 import { advanceBodyForChar, clearBodyState } from "@/modules/body/store";
 import {
   addRecords,
@@ -364,6 +364,45 @@ export function useCompanion() {
     [charId, toast]
   );
 
+  /* ---------- 语音通话：一轮结束后的落库（双消息入库 + 好感度 + 自动记忆提取，口径与发消息一致） ---------- */
+  const appendCallExchange = useCallback(
+    async (userText: string, assistantText: string) => {
+      const now = Date.now();
+      const userMsg: Msg = { id: uid(), role: "user", charId, content: userText, ts: now };
+      const asstMsg: Msg = { id: uid(), role: "assistant", charId, content: assistantText, ts: now + 1 };
+      setMessages((prev) => [...prev, userMsg, asstMsg]);
+      await db.put("messages", userMsg);
+      await db.put("messages", asstMsg);
+
+      // 好感度（与 send 同规则）
+      const delta = scoreMessage(userText);
+      if (delta !== 0) {
+        setAffection((prev) => {
+          const next = Math.max(0, prev + delta);
+          void setCharMeta(charId, "affection", next);
+          const before = levelOf(prev);
+          const after = levelOf(next);
+          if (after.min > before.min) {
+            toast(`好感度升级：${after.emoji} ${after.name}！`, "heart");
+          } else if (delta > 0) {
+            toast(`好感度 +${delta}`, "heart");
+          }
+          return next;
+        });
+      }
+
+      // 自动记忆提取（通话固定走宿主注入口径）
+      const recDrafts = extractRecordsFromUserMessage(userText);
+      if (recDrafts.length > 0) {
+        const added = await addRecords(charId, recDrafts);
+        if (added.length > 0) toast("记住了一些关于你的事", "info");
+      }
+      const un = suggestUnresolved(userText);
+      if (un.length > 0) await addUnresolved(charId, un[0]);
+    },
+    [charId, toast]
+  );
+
   /* ---------- 设置 ---------- */
   const updateSettings = useCallback((next: Settings) => {
     setSettings(next);
@@ -557,7 +596,7 @@ export function useCompanion() {
         } else if (settings.latentRecall) {
           consumePendingRecall(); // 工具模式下由 latent_session_start 负责，快照这里清掉
         }
-        // 生理系统：发消息前 tick + 事件触发检查，状态卡落在动态区
+        // 生理系统（Eventide）：发消息前 tick + 事件触发检查，状态卡落在动态区
         //（排在显影注入之后：每轮都变，属于缓存拆分的动态段）
         let bodyCard: string | null = null;
         if (settings.bodyCycle) {
@@ -816,6 +855,8 @@ export function useCompanion() {
     card,
     messages,
     memories,
+    /** 显影记忆状态（语音通话等模块注入上下文用） */
+    latent,
     affection,
     firstVisit,
     typing,
@@ -841,6 +882,7 @@ export function useCompanion() {
     ),
     summarizeWithLLM,
     editThought,
+    appendCallExchange,
     clearChat,
     clearAll,
   };
