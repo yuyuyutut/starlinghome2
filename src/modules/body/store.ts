@@ -2,6 +2,9 @@
  * body/store.ts — 生理状态的按角色持久化 + 模块级响应式存储
  * 与 latent/store 同构：模块级外部存储 + useSyncExternalStore；
  * 状态体积小且要同步读写，存 localStorage（starling.body.<charId>）。
+ *
+ * Required Notice: Copyright 2026 Chuli (@chuli1122)
+ * SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
  */
 
 import { useSyncExternalStore } from "react";
@@ -104,7 +107,7 @@ function parseTriggerWords(raw: string): string[] {
 }
 
 /**
- * 发消息前的完整流程：
+ * 发消息前的完整流程（对齐 Eventide 接入顺序）：
  * tick 推进 → 事件触发检查 → 渲染状态卡。返回状态卡文本（未注入为 null）。
  */
 export function advanceBodyForChar(charId: string, opts: AdvanceOptions): string | null {

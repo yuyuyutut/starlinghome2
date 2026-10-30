@@ -1,5 +1,9 @@
 /**
- * body/engine.ts — 生理时间推进引擎
+ * body/engine.ts — Eventide 时间推进引擎（TypeScript 移植）
+ *
+ * 移植自 github.com/chuli1122/Eventide（src/eventide/engine.py）。
+ * Required Notice: Copyright 2026 Chuli (@chuli1122)
+ * SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
  *
  * advanceState 只做时间推进：分段 tick（每段 ≤6h，最多 48 段），
  * 顺序：事件过期(end_deltas) → 周期过期(next_key；ebb+fatigue>=70→recovery)

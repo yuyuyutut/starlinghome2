@@ -1,8 +1,12 @@
 /**
- * body/config.ts — 生理内核默认配置
+ * body/config.ts — Eventide 生理内核的默认配置（TypeScript 移植）
+ *
+ * 移植自 github.com/chuli1122/Eventide（src/eventide/config.py）。
+ * Required Notice: Copyright 2026 Chuli (@chuli1122)
+ * SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
  *
  * 6 个周期 + 7 项身体数值（含档位文案）+ 18 个事件 + 状态卡提示选项 + 初始数值。
- * 结算 / 梦境系统未移植（依赖宿主消息窗口调度，超出本轮范围，详见 PORTING.md）。
+ * 结算 / 梦境系统未移植（核心对齐范围）。
  */
 
 export type BodyFieldKey =

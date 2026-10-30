@@ -1,7 +1,10 @@
 /**
- * body/triggers.ts — 默认事件触发表（宿主层）
+ * body/triggers.ts — 默认事件触发表（宿主层，对齐 Eventide README「默认事件触发与联动」）
  *
- * 生理内核不自动抽事件；本文件按默认触发表实现可复刻的口径：
+ * Required Notice: Copyright 2026 Chuli (@chuli1122)
+ * SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+ *
+ * Eventide 内核不自动抽事件；本文件按 README 触发表实现可复刻的默认口径：
  * 10 分钟节流 → 时间窗口 → 硬条件 + 冷却 + 窗口去重 → 概率抽取 → 优先级取一个主事件。
  * missed 快照供迟发热 / 反常平静使用；梦后余温依赖梦境系统（未移植），不参与抽取。
  */
