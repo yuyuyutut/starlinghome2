@@ -1,13 +1,11 @@
 /**
  * settings/BodySection.tsx — 设置里的「生理系统」模块（独立 Section）
- * 宿主开关：总开关（tick + 事件）、状态卡注入、称呼触发词、独立模型连接。
+ * Eventide 宿主开关：总开关（tick + 事件）、状态卡注入、称呼触发词。
  */
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import type { Settings } from "@/lib/db";
 import { Section } from "./Section";
-import { ConnFields } from "./ModelConnections";
-import { BODY_PROVIDERS, testBodyEndpoint } from "../body/api";
 
 export function BodySection({
   form,
@@ -17,7 +15,7 @@ export function BodySection({
   onChange: (patch: Partial<Settings>) => void;
 }) {
   return (
-    <Section zh="生理系统（身体涨落）" fr="Corps">
+    <Section zh="生理系统（Eventide 身体涨落）" fr="Corps">
       <div className="flex items-start justify-between gap-3">
         <p className="text-[13px] font-normal leading-relaxed text-black/60">
           随时间与互动推进 TA 的身体周期（平稳 → 蓄积 → 预兆 → 易感 → 退潮），七项数值以
@@ -50,19 +48,6 @@ export function BodySection({
               命中且当前没有主事件时按概率触发；已有主事件时只把刺激小幅写进敏感度 / 占有欲 / 压抑感
             </p>
           </div>
-
-          <div className="hairline-b my-1" />
-
-          {/* 独立模型连接：结算 / 梦境等生理专属请求用，留空沿用聊天 */}
-          <ConnFields
-            zh="模型连接"
-            note="结算 / 梦境等生理专属请求"
-            form={form}
-            keys={{ base: "bodyBaseUrl", key: "bodyApiKey", model: "bodyModel" }}
-            onChange={onChange}
-            providers={BODY_PROVIDERS}
-            test={testBodyEndpoint}
-          />
         </div>
       )}
     </Section>
