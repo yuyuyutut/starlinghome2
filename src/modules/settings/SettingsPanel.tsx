@@ -21,7 +21,7 @@ import { ModelConnections } from "./ModelConnections";
 import { ImageGenSection } from "./ImageGenSection";
 import { CacheSection } from "./CacheSection";
 import { BodySection } from "./BodySection";
-import { TideSection } from "./TideSection";
+import { VoiceSection } from "./VoiceSection";
 import { EMBED_PROVIDERS, testEmbedConnection } from "../latent/embedProviders";
 import { resetEmbedFailure } from "../latent/embed";
 
@@ -333,13 +333,12 @@ export function SettingsPanel({ c }: { c: Companion }) {
 
         {/* 生图：独立模块（API 链接 + 生图设置 + 测试生图） */}
         <ImageGenSection form={form} onChange={(patch) => setForm((f) => ({ ...f, ...patch }))} />
+
+        <VoiceSection form={form} onChange={(patch) => setForm((f) => ({ ...f, ...patch }))} />
         {/* 提示词缓存：稳定前缀 / 工具 schema 的 provider 端缓存 + 本地观测日志（Cove 笔记） */}
         <CacheSection form={form} onChange={(patch) => setForm((f) => ({ ...f, ...patch }))} />
 
         <BodySection form={form} onChange={(patch) => setForm((f) => ({ ...f, ...patch }))} />
-
-        {/* 心潮引擎：心潮·念 动态心念服务的连接配置 */}
-        <TideSection form={form} onChange={(patch) => setForm((f) => ({ ...f, ...patch }))} />
 
         {/* 双方思考：显示双方内心旁白 */}
         <Section zh="双方思考" fr="Pensées">
