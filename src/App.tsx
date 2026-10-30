@@ -12,17 +12,16 @@ import { SettingsPanel } from "@/modules/settings/SettingsPanel";
 import { AppsPanel } from "@/modules/apps/AppsPanel";
 import { LockScreen } from "@/modules/lock/LockScreen";
 import { BodyPanel } from "@/modules/body/BodyPanel";
-import { TidePanel } from "@/modules/tide/TidePanel";
+import { CallScreen } from "@/modules/call/CallScreen";
 import { BG_GARDEN } from "./assets-gen";
 
-type Tab = "chat" | "character" | "memory" | "body" | "tide" | "apps" | "settings";
+type Tab = "chat" | "character" | "memory" | "body" | "apps" | "settings";
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: "chat", label: "聊天", icon: "✎" },
   { id: "character", label: "角色", icon: "❀" },
   { id: "memory", label: "记忆", icon: "✦" },
   { id: "body", label: "生理", icon: "♡" },
-  { id: "tide", label: "心潮", icon: "≋" },
   { id: "apps", label: "应用", icon: "❖" },
   { id: "settings", label: "设置", icon: "☾" },
 ];
@@ -37,14 +36,16 @@ export default function App() {
   /* iOS 真机键盘打磨：聚焦输入框自动滚进可视区 */
   useIosKeyboardPolish();
 
-  /* iOS 真机 PWA 适配：动态视口高度 + 键盘弹出自动收缩（见 iosKeyboard.ts） */
+  /* 高度链统一 100vh（见 index.css）：PWA 无地址栏，不需要 100dvh 的动态性，
+     也不再用 visualViewport 同步高度——iOS 自行处理 safe-area，底部导航始终稳定 */
 
   return (
-    <div className="relative mx-auto flex w-full max-w-2xl flex-col" style={{ height: "var(--app-height, 100dvh)" }}>
+    <div className="relative mx-auto flex h-screen w-full max-w-2xl flex-col">
       {lockOn && !unlocked && <LockScreen onUnlock={() => setUnlocked(true)} />}
-      {/* 全屏背景：灰调植物庭院插画 */}
+      {/* 全屏背景：灰调植物庭院插画 + 白色雾面 */}
       <div className="fixed inset-0 -z-10">
         <img src={BG_GARDEN} alt="" className="h-full w-full object-cover" draggable={false} />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/25 via-white/10 to-white/35" />
       </div>
 
       {/* 主区域 */}
@@ -58,8 +59,6 @@ export default function App() {
             <MemoryHome c={c} />
           ) : tab === "body" ? (
             <BodyPanel c={c} />
-          ) : tab === "tide" ? (
-            <TidePanel c={c} />
           ) : tab === "apps" ? (
             <AppsPanel />
           ) : (
@@ -74,7 +73,7 @@ export default function App() {
 
       {/* 底部磨砂导航 */}
       <nav
-        className="glass-deep z-10 mx-4 mb-3 grid shrink-0 grid-cols-7 rounded-full px-2 py-1.5"
+        className="glass-deep z-10 mx-4 mb-3 grid shrink-0 grid-cols-6 rounded-full px-2 py-1.5"
         style={{ marginBottom: "max(0.75rem, env(safe-area-inset-bottom, 0px))" }}
       >
         {TABS.map((t) => (
@@ -90,6 +89,9 @@ export default function App() {
           </button>
         ))}
       </nav>
+
+      {/* 语音通话全屏层 */}
+      <CallScreen c={c} />
 
       {/* 全局提示（好感度变化等） */}
       <div className="pointer-events-none fixed left-1/2 top-4 z-50 flex w-full max-w-2xl -translate-x-1/2 flex-col items-center gap-2 px-4">

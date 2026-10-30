@@ -135,24 +135,18 @@ export interface Settings {
   showThought: boolean;
   /** 提示词缓存：稳定 system 前缀与工具 schema 打 Anthropic 式 cache_control（默认关，观测日志见设置「提示词缓存」区块） */
   promptCache: boolean;
-  /** 生理系统：随时间推进身体周期与七项数值，按触发表抽取短时事件 */
+  /** 生理系统（Eventide）：随时间推进身体周期与七项数值，按触发表抽取短时事件 */
   bodyCycle: boolean;
   /** 生理系统：把 <ephemeral_state> 状态卡注入每轮请求（关闭仍 tick 与展示，只是不注入） */
   bodyInject: boolean;
   /** 生理系统：称呼 / 触发词（逗号分隔），命中可触发「声音 / 称呼触发」事件 */
   bodyTriggers: string;
-  /** 生理系统：独立 API 链接（结算 / 梦境等生理专属请求用），留空默认主模型 */
-  bodyBaseUrl: string;
-  /** 生理系统：独立 API 密钥，留空沿用聊天 Key */
-  bodyApiKey: string;
-  /** 生理系统：独立模型名，留空沿用聊天模型 */
-  bodyModel: string;
-  /** 心潮引擎：心潮·念 动态心念服务地址（如 https://host:7100，留空则心潮板块为本地占位） */
-  xinchaoBaseUrl: string;
-  /** 心潮引擎：dashboard 访问令牌（DASHBOARD_ACCESS_TOKEN） */
-  xinchaoToken: string;
-  /** 心潮引擎：面板打开时的轮询间隔（秒，默认 30） */
-  xinchaoPollSec: number;
+  /** 语音合成服务：OpenAI 兼容 /audio/speech（留空沿用聊天） */
+  voiceBaseUrl: string;
+  voiceApiKey: string;
+  voiceModel: string;
+  /** 语音音色（OpenAI 系 alloy/nova/shimmer…；第三方按自家音色名） */
+  voiceName: string;
 }
 const SETTINGS_KEY = "starling.settings";
 const DEFAULT_SETTINGS: Settings = {
@@ -198,12 +192,10 @@ const DEFAULT_SETTINGS: Settings = {
   bodyCycle: true,
   bodyInject: true,
   bodyTriggers: "",
-  bodyBaseUrl: "",
-  bodyApiKey: "",
-  bodyModel: "",
-  xinchaoBaseUrl: "",
-  xinchaoToken: "",
-  xinchaoPollSec: 30,
+  voiceBaseUrl: "",
+  voiceApiKey: "",
+  voiceModel: "",
+  voiceName: "alloy",
 };
 
 export function loadSettings(): Settings {

@@ -69,19 +69,16 @@
   * {
     @apply border-border;
   }
-  /* 透明兜底：让壁纸直接透出，不再盖灰绿色蒙版 */
+  /* 与主题色一致的兜底底色：任何系统级露底（Safari 工具栏过渡、过滚动回弹）都融入画面 */
   html {
-    background: transparent;
+    background: #e6e6e2;
   }
-  /* 高度链统一动态视口高度 + overflow hidden：
-     - 100dvh 优先：iOS 键盘弹出时自动收缩，底部 UI 不被遮挡
-     - 100vh 兜底：旧浏览器不支持 dvh 时降级
-     - iOS 真机会由 iosKeyboard.ts 用 visualViewport.height 精确覆盖 #root 高度 */
+  /* 高度链统一 100vh + overflow hidden（PWA 无地址栏，不需要 100dvh 的动态性）：
+     html / body / #root 三层同高，iOS 自行处理 safe-area，应用滚动全部由面板内部容器承担 */
   html,
   body,
   #root {
     height: 100vh;
-    height: 100dvh;
     overflow: hidden;
     max-width: 100vw;
   }
@@ -91,14 +88,7 @@
     font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
     font-weight: 300;
     overscroll-behavior: none;
-    background: transparent;
-    touch-action: none;
-    -webkit-user-drag: none;
-  }
-  /* 禁止图片被拖拽 */
-  img {
-    -webkit-user-drag: none;
-    user-select: none;
+    background: #e6e6e2;
   }
 }
 
@@ -175,11 +165,7 @@
   box-shadow: none;
 }
 
-/* 聊天区细腻滚动条 + 触摸行为限制（防页面整体拖动） */
-.chat-scroll {
-  touch-action: pan-y;
-  overscroll-behavior-y: contain;
-}
+/* 聊天区细腻滚动条 */
 .chat-scroll::-webkit-scrollbar {
   width: 5px;
 }

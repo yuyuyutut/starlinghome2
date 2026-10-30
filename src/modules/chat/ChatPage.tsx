@@ -4,6 +4,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
+import { requestCallStart } from "@/modules/call/useCall";
 import type { Companion } from "@/hooks/useCompanion";
 import { Avatar } from "@/modules/character/Avatar";
 import { anniversaryText, AFFECTION_LEVELS } from "@/modules/affection/affection";
@@ -298,6 +299,14 @@ export function ChatPage({ c }: { c: Companion }) {
               className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-[16px] text-black/45 transition-colors hover:bg-black/[0.06] hover:text-black/70 disabled:opacity-40"
             >
               {imgBusy ? "…" : "✦"}
+            </button>
+            <button
+              onClick={() => requestCallStart()}
+              aria-label="语音通话"
+              title="语音通话：轮流说话的实时语音，支持中英双语"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-[16px] text-black/45 transition-colors hover:bg-black/[0.06] hover:text-black/70"
+            >
+              ☏
             </button>
             <button
               onClick={() => setThoughtOpen((v) => !v)}
